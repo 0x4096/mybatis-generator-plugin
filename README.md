@@ -38,6 +38,8 @@
 * [状态枚举生成插件（EnumTypeStatusPlugin）](#21-状态枚举生成插件)
 * [增量插件（IncrementPlugin）](#22-增量插件)
 * [Mapper注解插件（MapperAnnotationPlugin）](#23-Mapper注解插件)
+* [DiyCommentGenerator 自定义DO类注释 ](#23-Mapper注解插件)
+    
 
 ---------------------------------------
 Maven引用：  
