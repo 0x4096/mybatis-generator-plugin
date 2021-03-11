@@ -23,12 +23,15 @@ import com.itfsw.mybatis.generator.plugins.utils.hook.ITableConfigurationHook;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -49,6 +52,7 @@ public class BasePlugin extends PluginAdapter {
      */
     public static final String PRO_MYBATIS_VERSION = "mybatisVersion";
     protected String mybatisVersion = "3.5.0";
+
 
     /**
      * Set the context under which this plugin is running.
@@ -121,4 +125,5 @@ public class BasePlugin extends PluginAdapter {
             this.mybatisVersion = this.getProperties().getProperty(PRO_MYBATIS_VERSION);
         }
     }
+
 }

@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class DiyCommentGenerator implements CommentGenerator {
 
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     public void addConfigurationProperties(Properties properties) {
@@ -66,7 +66,7 @@ public class DiyCommentGenerator implements CommentGenerator {
             topLevelClass.addJavaDocLine(" * ");
         }
         topLevelClass.addJavaDocLine(" * @author " + System.getProperty("user.name"));
-        topLevelClass.addJavaDocLine(" * @datetime " + dateTimeFormatter.format(LocalDateTime.now()));
+        topLevelClass.addJavaDocLine(" * @date " + dateTimeFormatter.format(LocalDateTime.now()));
         topLevelClass.addJavaDocLine(" */");
     }
 
