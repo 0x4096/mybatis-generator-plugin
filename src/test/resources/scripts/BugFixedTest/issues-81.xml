@@ -27,7 +27,7 @@
         <property name="endingDelimiter" value="`"/>
 
         <!-- 插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.LimitPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.LimitPlugin"/>
 
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>

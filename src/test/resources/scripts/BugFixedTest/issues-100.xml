@@ -27,7 +27,7 @@
         <property name="endingDelimiter" value="`"/>
 
         <!-- 插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.EnumTypeStatusPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.EnumTypeStatusPlugin"/>
 
         <!--jdbc的数据库连接 -->
         <jdbcConnection driverClass="${driver}" connectionURL="${url}" userId="${username}" password="${password}" />

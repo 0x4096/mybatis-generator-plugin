@@ -24,7 +24,7 @@
     <context id="default" targetRuntime="MyBatis3">
         <!-- 插件 -->
         <!-- 批量插入插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.BatchInsertPlugin"/>
 
         <!--jdbc的数据库连接 -->
         <jdbcConnection driverClass="${driver}" connectionURL="${url}" userId="${username}" password="${password}" />

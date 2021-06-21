@@ -25,7 +25,7 @@
     <context id="default" targetRuntime="MyBatis3">
         <!-- 插件 -->
         <!-- Example 目标包修改插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin">
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.ExampleTargetPlugin">
             <property name="targetPackage" value="com.itfsw.mybatis.generator.plugins.dao.example"/>
         </plugin>
 

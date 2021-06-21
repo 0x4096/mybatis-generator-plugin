@@ -23,7 +23,7 @@
     <!--导入属性配置 -->
     <context id="default" targetRuntime="MyBatis3">
         <!-- 插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.UpsertPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.UpsertPlugin"/>
 
         <!--jdbc的数据库连接 -->
         <jdbcConnection driverClass="org.hsqldb.jdbcDriver" connectionURL="jdbc:hsqldb:mem:aname" userId="sa" />

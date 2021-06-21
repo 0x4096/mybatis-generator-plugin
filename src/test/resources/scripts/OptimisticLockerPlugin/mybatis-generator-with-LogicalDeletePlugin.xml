@@ -24,8 +24,8 @@
     <!--导入属性配置 -->
     <context id="default" targetRuntime="MyBatis3">
         <!-- 插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.OptimisticLockerPlugin" />
-        <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.OptimisticLockerPlugin" />
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.LogicalDeletePlugin">
             <!-- 逻辑删除-已删除值 -->
             <property name="logicalDeleteValue" value="9L"/>
             <!-- 逻辑删除-未删除值 -->

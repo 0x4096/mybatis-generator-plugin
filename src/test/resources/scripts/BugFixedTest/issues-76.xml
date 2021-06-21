@@ -25,7 +25,7 @@
         <property name="mybatisVersion" value="3.5.0"/>
 
         <!-- 插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.UpsertPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.UpsertPlugin"/>
 
         <!--jdbc的数据库连接 -->
         <jdbcConnection driverClass="${driver}" connectionURL="${url}" userId="${username}" password="${password}"/>

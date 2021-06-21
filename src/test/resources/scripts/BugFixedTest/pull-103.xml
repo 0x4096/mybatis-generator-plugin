@@ -23,9 +23,9 @@
     <!--导入属性配置 -->
     <context id="default" targetRuntime="MyBatis3">
         <!-- Select Selective插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.SelectSelectivePlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.SelectSelectivePlugin"/>
         <!-- 数据Model属性对应Column获取插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.ModelColumnPlugin"/>
 
         <!--jdbc的数据库连接 -->
         <jdbcConnection driverClass="${driver}" connectionURL="${url}" userId="${username}" password="${password}"/>

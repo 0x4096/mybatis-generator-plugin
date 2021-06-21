@@ -27,11 +27,11 @@
         <property name="endingDelimiter" value="`"/>
 
         <!-- 乐观锁插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.OptimisticLockerPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.OptimisticLockerPlugin"/>
         <!-- 数据Model属性对应Column获取插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.ModelColumnPlugin"/>
         <!-- Selective选择插入更新增强插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.SelectiveEnhancedPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.SelectiveEnhancedPlugin"/>
 
 
         <!--jdbc的数据库连接 -->

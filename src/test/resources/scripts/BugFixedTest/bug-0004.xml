@@ -27,11 +27,11 @@
         <property name="endingDelimiter" value="`"/>
 
         <!-- Example 目标包修改插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin">
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.ExampleTargetPlugin">
             <property name="targetPackage" value="com.itfsw.dao.example"/>
         </plugin>
         <!-- 表重命名配置插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.TableRenameConfigurationPlugin">
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.TableRenameConfigurationPlugin">
             <property name="domainObjectRenamingRule.searchString" value="^T"/>
             <property name="domainObjectRenamingRule.replaceString" value=""/>
         </plugin>

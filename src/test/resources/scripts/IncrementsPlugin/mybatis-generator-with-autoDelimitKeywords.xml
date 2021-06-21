@@ -28,8 +28,8 @@
         <property name="endingDelimiter" value="`"/>
 
         <!-- 插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.IncrementsPlugin" />
-        <plugin type="com.itfsw.mybatis.generator.plugins.ModelBuilderPlugin" />
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.IncrementsPlugin" />
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.ModelBuilderPlugin" />
 
         <!--jdbc的数据库连接 -->
         <jdbcConnection driverClass="${driver}" connectionURL="${url}" userId="${username}" password="${password}" />

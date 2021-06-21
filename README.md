@@ -1,3 +1,5 @@
+说明：来源如下,有改动,方便自己项目开发使用 更多使用请查看 https://github.com/itfsw/mybatis-generator-plugin
+
 # 这是 MyBatis Generator 插件的拓展插件包  
 应该说使用Mybatis就一定离不开[MyBatis Generator](https://github.com/mybatis/generator)这款代码生成插件，而这款插件自身还提供了插件拓展功能用于强化插件本身，官方已经提供了一些[拓展插件](http://www.mybatis.org/generator/reference/plugins.html)，本项目的目的也是通过该插件机制来强化Mybatis Generator本身，方便和减少我们平时的代码开发量。  
 >因为插件是本人兴之所至所临时发布的项目（本人已近三年未做JAVA开发，代码水平请大家见谅），但基本插件都是在实际项目中经过检验的请大家放心使用，但因为项目目前主要数据库为MySQL，Mybatis实现使用Mapper.xml方式，所以代码生成时对于其他数据库和注解方式的支持未予考虑，请大家见谅。    
@@ -25,12 +27,8 @@
 * [数据Model属性对应Column获取插件（ModelColumnPlugin）](#8-数据model属性对应column获取插件)
 * [存在即更新插件（UpsertPlugin）](#9-存在即更新插件)
 * [Selective选择插入更新增强插件（SelectiveEnhancedPlugin）](#10-selective选择插入更新增强插件)
-* [~~Table增加前缀插件（TablePrefixPlugin）~~](#11-table增加前缀插件)
-* [~~Table重命名插件（TableRenamePlugin）~~](#12-table重命名插件)
 * [自定义注释插件（CommentPlugin）](#13-自定义注释插件)
-* [~~增量插件（IncrementsPlugin）~~](#14-增量插件)
 * [查询结果选择性返回插件（SelectSelectivePlugin）](#15-查询结果选择性返回插件)
-* [~~官方ConstructorBased配置BUG临时修正插件（ConstructorBasedBugFixPlugin）~~](#16-官方constructorbased配置bug临时修正插件)
 * [乐观锁插件（OptimisticLockerPlugin）](#17-乐观锁插件)
 * [表重命名配置插件（TableRenameConfigurationPlugin）](#18-表重命名配置插件)
 * [Lombok插件（LombokPlugin）](#19-Lombok插件)
@@ -39,6 +37,7 @@
 * [增量插件（IncrementPlugin）](#22-增量插件)
 * [Mapper注解插件（MapperAnnotationPlugin）](#23-Mapper注解插件)
 * [DiyCommentGenerator 自定义DO类注释 ](#23-Mapper注解插件)
+* [IsExistPlugin 是否存在查询条件 ](#23-Mapper注解插件)
     
 
 ---------------------------------------
@@ -80,67 +79,15 @@ MyBatis Generator 参考配置（插件依赖应该配置在mybatis-generator-ma
     </dependencies>
 </plugin>
 ```
----------------------------------------
-gradle集成[[issues#41]](https://github.com/itfsw/mybatis-generator-plugin/issues/41)），感谢[masa-kunikata](https://github.com/masa-kunikata)提供的脚本。
-```gradle
-// https://gist.github.com/masa-kunikata/daaf0f51a8ab9b808f61805407e1654c
-buildscript {
-    repositories {
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "gradle.plugin.com.arenagod.gradle:mybatis-generator-plugin:1.4"
-    }
-}
 
-apply plugin: 'java-library'
-apply plugin: "com.arenagod.gradle.MybatisGenerator"
-apply plugin: 'eclipse'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-
-def mybatisGeneratorCore = 'org.mybatis.generator:mybatis-generator-core:1.3.7'
-def itfswMybatisGeneratorPlugin = 'com.itfsw:mybatis-generator-plugin:1.3.9'
-
-mybatisGenerator {
-  verbose = false
-  configFile = "config/mybatisGenerator/generatorConfig.xml"
-
-  dependencies {
-    mybatisGenerator project(':')
-    mybatisGenerator itfswMybatisGeneratorPlugin
-    mybatisGenerator mybatisGeneratorCore
-  }
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile mybatisGeneratorCore
-    compile itfswMybatisGeneratorPlugin
-    testCompile 'junit:junit:4.12'
-}
-
-def defaultEncoding = 'UTF-8'
-
-compileJava {
-    options.encoding = defaultEncoding
-}
-compileTestJava {
-    options.encoding = defaultEncoding
-}
-```
 ---------------------------------------
 ### 1. 查询单条数据插件
 对应表Mapper接口增加了方法  
 插件：
+
 ```xml
 <!-- 查询单条数据插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
 ```
 使用：  
 ```java
@@ -170,9 +117,10 @@ public interface TbMapper {
 >warning: 分页默认从0开始，目前网上流行的大多数前端框架分页都是从0开始，插件保持这种方式（可通过配置startPage参数修改）； 
 
 插件：
+
 ```xml
 <!-- MySQL分页插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.LimitPlugin">
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.LimitPlugin">
     <!-- 通过配置startPage影响Example中的page方法开始分页的页码，默认分页从0开始 -->
     <property name="startPage" value="0"/>
 </plugin>
@@ -272,9 +220,10 @@ public class Test {
 ### 3. 数据Model链式构建插件
 这个是仿jquery的链式调用强化了表的Model的赋值操作  
 插件：
+
 ```xml
 <!-- 数据Model链式构建插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.ModelBuilderPlugin"/>
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.ModelBuilderPlugin"/>
 ```
 使用：  
 ```java
@@ -306,9 +255,10 @@ public class Test {
 * 增加when方法（Example和Criteria都有），方便根据不同条件附加对应操作。
 
 插件：
+
 ```xml
 <!-- Example Criteria 增强插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin">
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.ExampleEnhancedPlugin">
     <!-- 是否支持已经过时的andIf方法（推荐使用when代替），默认支持 -->
     <property name="enableAndIf" value="true"/>
 </plugin>
@@ -432,9 +382,10 @@ public class Test {
 ### 5. Example 目标包修改插件
 Mybatis Generator 插件默认把Model类和Example类都生成到一个包下，这样该包下类就会很多不方便区分，该插件目的就是把Example类独立到一个新包下，方便查看。  
 插件：
+
 ```xml
 <!-- Example 目标包修改插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin">
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.ExampleTargetPlugin">
     <!-- 修改Example类生成到目标包下 -->
     <property name="targetPackage" value="com.itfsw.mybatis.generator.dao.example"/>
 </plugin>
@@ -444,9 +395,10 @@ Mybatis Generator 插件默认把Model类和Example类都生成到一个包下�
 >warning: 插件生成的batchInsertSelective方法在使用时必须指定selective列，因为插件本身是预编译生成sql,对于批量数据是无法提供类似insertSelective非空插入的方式的;    
 
 插件：
+
 ```xml
 <!-- 批量插入插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin">
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.BatchInsertPlugin">
     <!-- 
     开启后可以实现官方插件根据属性是否为空决定是否插入该字段功能
     ！需开启allowMultiQueries=true多条sql提交操作，所以不建议使用！插件默认不开启
@@ -497,10 +449,12 @@ public class Test {
 >warning: 注意在配合[状态枚举生成插件（EnumTypeStatusPlugin）](#21-状态枚举生成插件)使用时的注释格式，枚举数量必须大于等于2，且逻辑删除和未删除的值能在枚举中找到。
  
 插件：
+
 ```xml
+
 <xml>
     <!-- 逻辑删除插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.LogicalDeletePlugin">
         <!-- 这里配置的是全局逻辑删除列和逻辑删除值，当然在table中配置的值会覆盖该全局配置 -->
         <!-- 逻辑删除列类型只能为数字、字符串或者布尔类型 -->
         <property name="logicalDeleteColumn" value="del_flag"/>
@@ -508,7 +462,7 @@ public class Test {
         <property name="logicalDeleteValue" value="9"/>
         <!-- 逻辑删除-未删除值 -->
         <property name="logicalUnDeleteValue" value="0"/>
-        
+
         <!-- 是否生成逻辑删除常量(只有开启时 logicalDeleteConstName、logicalUnDeleteConstName 才生效) -->
         <property name="enableLogicalDeleteConst" value="true"/>
         <!-- 逻辑删除常量名称，不配置默认为 IS_DELETED -->
@@ -516,7 +470,7 @@ public class Test {
         <!-- 逻辑删除常量（未删除）名称，不配置默认为 NOT_DELETED -->
         <property name="logicalUnDeleteConstName" value="NOT_DELETED"/>
     </plugin>
-    
+
     <table tableName="tb">
         <!-- 这里可以单独表配置逻辑删除列和删除值，覆盖全局配置 -->
         <property name="logicalDeleteColumn" value="del_flag"/>
@@ -621,9 +575,10 @@ public class Tb {
 * 提供静态excludes方法来进行快速反选。  
 
 插件：
+
 ```xml
 <!-- 数据Model属性对应Column获取插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.ModelColumnPlugin"/>
 ```
 使用：  
 ```java
@@ -687,9 +642,10 @@ public class Test {
 2. 在开启allowMultiQueries=true（默认不会开启）情况下支持upsertByExample，upsertByExampleSelective操作，但强力建议不要使用（需保证团队没有使用statement提交sql,否则会存在sql注入风险）（[[issues#2]](https://github.com/itfsw/mybatis-generator-plugin/issues/2)）。
 
 插件：
+
 ```xml
 <!-- 存在即更新插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.UpsertPlugin">
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.UpsertPlugin">
     <!-- 
     支持upsertByExample，upsertByExampleSelective操作
     ！需开启allowMultiQueries=true多条sql提交操作，所以不建议使用！插件默认不开启
@@ -788,9 +744,10 @@ public class Test {
 >warning: 以前老版本（1.1.x）插件处理需要指定的列时是放入Model中指定的，但在实际使用过程中有同事反馈这个处理有点反直觉，导致某些新同事不能及时找到对应方法，而且和增强的SelectSelectivePlugin以及UpsertSelective使用方式都不一致，所以统一修改之。  
 
 插件：
+
 ```xml
 <!-- Selective选择插入更新增强插件 -->
-<plugin type="com.itfsw.mybatis.generator.plugins.SelectiveEnhancedPlugin"/>
+<plugin type="com.github.Is0x4096.mybatis.generator.plugins.SelectiveEnhancedPlugin"/>
 ```
 使用：  
 ```java
@@ -850,14 +807,16 @@ public class Test {
 </table>
 ```
 插件：
+
 ```xml
+
 <xml>
     <!-- Table增加前缀插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.TablePrefixPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.TablePrefixPlugin">
         <!-- 这里配置的是全局表前缀，当然在table中配置的值会覆盖该全局配置 -->
         <property name="prefix" value="Cm"/>
     </plugin>
-    
+
     <table tableName="tb">
         <!-- 这里可以单独表配置前缀，覆盖全局配置 -->
         <property name="suffix" value="Db1"/>
@@ -900,15 +859,17 @@ public class Test {
 ``` 
 
 插件：
+
 ```xml
+
 <xml>
     <!-- Table重命名插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.TableRenamePlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.TableRenamePlugin">
         <!-- 可根据具体需求确定是否配置 -->
         <property name="searchString" value="^T"/>
         <property name="replaceString" value=""/>
     </plugin>
-    
+
     <table tableName="tb">
         <!-- 这个优先级最高，会忽略searchString、replaceString的配置 -->
         <property name="tableOverride" value="TestDb"/>
@@ -961,12 +922,14 @@ Mybatis Generator是原生支持自定义注释的（commentGenerator配置type�
 | addGeneralMethodComment | mgb<br>method<br>introspectedTable | 方法注释  |
 
 插件：
+
 ```xml
+
 <xml>
     <!-- 自定义注释插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.CommentPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.CommentPlugin">
         <!-- 自定义模板路径 -->
-        <property name="template" value="src/main/resources/mybatis-generator-comment.ftl" />
+        <property name="template" value="src/main/resources/mybatis-generator-comment.ftl"/>
     </plugin>
 </xml>
 ```
@@ -1261,11 +1224,13 @@ Mybatis Generator是原生支持自定义注释的（commentGenerator配置type�
 >warning：该插件在整合LombokPlugin使用时会生成大量附加代码影响代码美观，强力建议切换到新版插件[IncrementPlugin](#22-增量插件);    
 
 插件：
+
 ```xml
+
 <xml>
     <!-- 增量插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.IncrementsPlugin" />
-    
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.IncrementsPlugin"/>
+
     <table tableName="tb">
         <!-- 配置需要进行增量操作的列名称（英文半角逗号分隔） -->
         <property name="incrementsColumns" value="field1,field2"/>
@@ -1297,10 +1262,12 @@ public class Test {
 所以可能会出现list中存在null元素的问题，这个是mybatis自身机制造成的当查询出来的某行所有列都为null时不会生成对象（PS：其实这个不能算是错误，mybatis这样处理也说的通，但是在使用时还是要注意null的判断，当然如果有什么配置或者其他处理方式欢迎反馈哦）。  
 
 插件：
+
 ```xml
+
 <xml>
     <!-- 查询结果选择性返回插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.SelectSelectivePlugin" />
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.SelectSelectivePlugin"/>
 </xml>
 ```
 使用：  
@@ -1335,10 +1302,12 @@ public class Test {
 > 官方V1.3.6版本将解决这个bug,老版本的可以使用这个插件临时修正问题。  
 
 插件：
+
 ```xml
+
 <xml>
     <!-- 官方ConstructorBased配置BUG临时修正插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.ConstructorBasedBugFixPlugin" />
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.ConstructorBasedBugFixPlugin"/>
 </xml>
 ```
 ### 17. 乐观锁插件
@@ -1346,14 +1315,16 @@ public class Test {
 同时在更新操作中支持自定义nextVersion或者利用sql 的“set column = column + 1”去维护版本号。   
 
 插件：
+
 ```xml
+
 <xml>
     <!-- 乐观锁插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.OptimisticLockerPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.OptimisticLockerPlugin">
         <!-- 是否启用自定义nextVersion，默认不启用(插件会默认使用sql的 set column = column + 1) -->
         <property name="customizedNextVersion" value="false"/>
     </plugin>
-    
+
     <table tableName="tb">
         <!-- 这里可以单独表配置，覆盖全局配置 -->
         <property name="customizedNextVersion" value="true"/>
@@ -1411,52 +1382,58 @@ public class Test {
 官方提供了domainObjectRenamingRule(官方最新版本已提供)、columnRenamingRule分别进行生成的表名称和对应表字段的重命名支持，但是它需要每个表单独进行配置，对于常用的如表附带前缀“t_”、字段前缀“f_”这种全局性替换会比较麻烦。   
 该插件提供了一种全局替换机制，当表没有单独指定domainObjectRenamingRule、columnRenamingRule时采用全局性配置。   
 同时插件提供clientSuffix、exampleSuffix、modelSuffix来修改对应生成的类和文件的结尾（之前issue中有用户希望能把Mapper替换成Dao）。       
-- 全局domainObjectRenamingRule  
+- 全局domainObjectRenamingRule
+
 ```xml
+
 <xml>
     <!-- 表重命名配置插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.TableRenameConfigurationPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.TableRenameConfigurationPlugin">
         <property name="domainObjectRenamingRule.searchString" value="^T"/>
         <property name="domainObjectRenamingRule.replaceString" value=""/>
     </plugin>
-    
+
     <table tableName="tb">
         <!-- 这里可以禁用全局domainObjectRenamingRule配置 -->
         <property name="domainObjectRenamingRule.disable" value="true"/>
     </table>
-    
+
     <table tableName="tb_ts1">
         <!-- 当然你也可以使用官方domainObjectRenamingRule的配置来覆盖全局配置 -->
         <domainObjectRenamingRule searchString="^Tb" replaceString="B"/>
     </table>
 </xml>
 ```
-- 全局columnRenamingRule  
+- 全局columnRenamingRule
+
 ```xml
+
 <xml>
     <!-- 表重命名配置插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.TableRenameConfigurationPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.TableRenameConfigurationPlugin">
         <!-- 需要注意，这里的正则和官方一样是比对替换都是原始表的column名称 -->
         <property name="columnRenamingRule.searchString" value="^f_"/>
         <property name="columnRenamingRule.replaceString" value="_"/>
     </plugin>
-    
+
     <table tableName="tb">
         <!-- 这里可以禁用全局columnRenamingRule配置 -->
         <property name="columnRenamingRule.disable" value="true"/>
     </table>
-    
+
     <table tableName="tb_ts1">
         <!-- 当然你也可以使用官方domainObjectRenamingRule的配置来覆盖全局配置 -->
         <columnRenamingRule searchString="^f_" replaceString="_"/>
     </table>
 </xml>
 ```
-- clientSuffix、exampleSuffix、modelSuffix  
+- clientSuffix、exampleSuffix、modelSuffix
+
 ```xml
+
 <xml>
     <!-- 表重命名配置插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.TableRenameConfigurationPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.TableRenameConfigurationPlugin">
         <!-- TbMapper -> TbDao, TbMapper.xml -> TbDao.xml -->
         <property name="clientSuffix" value="Dao"/>
         <!-- TbExmaple -> TbQuery -->
@@ -1476,9 +1453,10 @@ public class Test {
 插件模拟Lombok插件生成了一些附加代码可能在某些编译器上会提示错误，请忽略（Lombok = 1.18.2 已测试）。
 
 ```xml
+
 <xml>
     <!-- Lombok插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.LombokPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.LombokPlugin">
         <!-- @Data 默认开启,同时插件会对子类自动附加@EqualsAndHashCode(callSuper = true)，@ToString(callSuper = true) -->
         <property name="@Data" value="true"/>
         <!-- @Builder 必须在 Lombok 版本 >= 1.18.2 的情况下开启，对存在继承关系的类自动替换成@SuperBuilder -->
@@ -1497,18 +1475,21 @@ public class Test {
 数据Model实现Cloneable接口。
 
 ```xml
+
 <xml>
     <!-- 数据ModelCloneable插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.ModelCloneablePlugin"/>
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.ModelCloneablePlugin"/>
 </xml>
 ```
 ### 21. 状态枚举生成插件
 数据库中经常会定义一些状态字段，该工具可根据约定的注释格式生成对应的枚举类，方便使用。
 >warning：插件1.2.18版本以后默认开启自动扫描，根据约定注释格式自动生成对应枚举类
+
 ```xml
+
 <xml>
     <!-- 状态枚举生成插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.EnumTypeStatusPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.EnumTypeStatusPlugin">
         <!-- 是否开启自动扫描根据约定注释格式生成枚举，默认true -->
         <property name="autoScan" value="true"/>
         <!-- autoScan为false,这里可以定义全局需要检查生成枚举类的列名 -->
@@ -1674,11 +1655,13 @@ public class Tb {
 为更新操作生成set filedxxx = filedxxx +/- inc 操作，方便某些统计字段的更新操作，常用于某些需要计数的场景,需配合（[ModelColumnPlugin](#8-数据model属性对应column获取插件)）插件使用；     
 
 插件：
+
 ```xml
+
 <xml>
     <!-- 增量插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.IncrementPlugin" />
-    
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.IncrementPlugin"/>
+
     <table tableName="tb">
         <!-- 配置需要进行增量操作的列名称（英文半角逗号分隔） -->
         <property name="incrementColumns" value="field1,field2"/>
@@ -1706,10 +1689,12 @@ public class Test {
 对官方的（[MapperAnnotationPlugin](http://www.mybatis.org/generator/reference/plugins.html)）增强，可自定义附加@Repository注解（IDEA工具对@Mapper注解支持有问题，使用@Autowired会报无法找到对应bean，附加@Repository后解决）；     
 
 插件：
+
 ```xml
+
 <xml>
     <!-- Mapper注解插件 -->
-    <plugin type="com.itfsw.mybatis.generator.plugins.MapperAnnotationPlugin">
+    <plugin type="com.github.Is0x4096.mybatis.generator.plugins.MapperAnnotationPlugin">
         <!-- @Mapper 默认开启 -->
         <property name="@Mapper" value="true"/>
         <!-- @Repository 开启后解决IDEA工具@Autowired报错 -->

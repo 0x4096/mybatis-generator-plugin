@@ -25,7 +25,7 @@
     <context id="default" targetRuntime="MyBatis3">
         <!-- 插件 -->
         <!-- Example 目标包修改插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin"/>
+        <plugin type="com.github.Is0x4096.mybatis.generator.plugins.ExampleTargetPlugin"/>
 
         <!--jdbc的数据库连接 -->
         <jdbcConnection driverClass="${driver}" connectionURL="${url}" userId="${username}" password="${password}" />
