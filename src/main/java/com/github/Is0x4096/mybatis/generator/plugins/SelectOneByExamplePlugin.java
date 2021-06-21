@@ -18,7 +18,6 @@ package com.github.Is0x4096.mybatis.generator.plugins;
 
 import com.github.Is0x4096.mybatis.generator.plugins.utils.*;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.ISelectOneByExamplePluginHook;
-import com.itfsw.mybatis.generator.plugins.utils.*;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.Attribute;

@@ -21,7 +21,6 @@ import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.IIncrementPlugin
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.IIncrementsPluginHook;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.IOptimisticLockerPluginHook;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.IUpsertPluginHook;
-import com.itfsw.mybatis.generator.plugins.utils.*;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;

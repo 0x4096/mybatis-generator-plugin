@@ -20,7 +20,6 @@ import com.github.Is0x4096.mybatis.generator.plugins.utils.BasePlugin;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.FormatTools;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.IntrospectedTableTools;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.JavaElementGeneratorTools;
-import com.itfsw.mybatis.generator.plugins.utils.*;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.ILogicalDeletePluginHook;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;

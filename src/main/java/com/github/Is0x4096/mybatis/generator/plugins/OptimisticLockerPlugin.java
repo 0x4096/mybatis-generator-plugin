@@ -19,7 +19,6 @@ package com.github.Is0x4096.mybatis.generator.plugins;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.*;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.IModelBuilderPluginHook;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.IOptimisticLockerPluginHook;
-import com.itfsw.mybatis.generator.plugins.utils.*;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.ILogicalDeletePluginHook;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;

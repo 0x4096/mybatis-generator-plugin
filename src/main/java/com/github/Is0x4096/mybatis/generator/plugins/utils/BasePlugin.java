@@ -16,15 +16,12 @@
 
 package com.github.Is0x4096.mybatis.generator.plugins.utils;
 
-import com.github.Is0x4096.mybatis.generator.plugins.CommentPlugin;
-import com.github.Is0x4096.mybatis.generator.plugins.utils.enhanced.TemplateCommentGenerator;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.HookAggregator;
 import com.github.Is0x4096.mybatis.generator.plugins.utils.hook.ITableConfigurationHook;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,27 +59,6 @@ public class BasePlugin extends PluginAdapter {
         // 添加插件
         HookAggregator.getInstance().setContext(context);
 
-        // 配置插件使用的模板引擎
-        PluginConfiguration cfg = PluginTools.getPluginConfiguration(context, CommentPlugin.class);
-
-        if (cfg == null || cfg.getProperty(CommentPlugin.PRO_TEMPLATE) == null) {
-            commentGenerator = context.getCommentGenerator();
-        } else {
-            TemplateCommentGenerator templateCommentGenerator = new TemplateCommentGenerator(context, cfg.getProperty(CommentPlugin.PRO_TEMPLATE));
-
-            // ITFSW 插件使用的注释生成器
-            commentGenerator = templateCommentGenerator;
-
-            // 修正系统插件
-            try {
-                // 先执行一次生成CommentGenerator操作，然后再替换
-                context.getCommentGenerator();
-
-                BeanUtils.setProperty(context, "commentGenerator", templateCommentGenerator);
-            } catch (Exception e) {
-                logger.error("反射异常", e);
-            }
-        }
 
         // mybatis版本
         if (StringUtility.stringHasValue(context.getProperty(PRO_MYBATIS_VERSION))) {
